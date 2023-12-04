@@ -21,10 +21,10 @@ public class WaitsUtil {
 //        initializeNewWebDriverWait();
 //    }
 
-//    public static void initializeNewWebDriverWait() {
-//        wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10));
-//        logger.info("Wait Manger: " + wait);
-//    }
+    public static void initializeNewWebDriverWait() {
+        wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10));
+        logger.info("Wait Manger: " + wait);
+    }
 
     public WaitsUtil(WebDriver driver) {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));

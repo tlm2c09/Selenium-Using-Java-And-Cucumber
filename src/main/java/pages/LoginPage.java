@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 
+import java.util.List;
 import java.util.Map;
 
 import static utils.WaitsUtil.waitForElementNotToHaveExactTexts;
@@ -41,5 +42,9 @@ public class LoginPage extends BasePage {
             waitForElementToHaveExactTexts(By.xpath(locator), expectedTexts);
         } else waitForElementNotToHaveExactTexts(By.xpath(locator), expectedTexts);
         logger.info("The user '{}' the element '{}' to have exact texts '{}'", action, element, expectedTexts);
+    }
+
+    public void verifyTextsInLoginPage(String action, List<String> data) {
+        verifyTextsInPage(action, data);
     }
 }

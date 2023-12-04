@@ -1,6 +1,7 @@
 package stepdefinitions;
 
 import configs.DriverManager;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.apache.logging.log4j.LogManager;
@@ -8,9 +9,8 @@ import org.apache.logging.log4j.Logger;
 import pages.LoginPage;
 
 public class LoginPageSteps {
-    LoginPage loginPage = new LoginPage();
+    LoginPage loginPage;
     private final String LOGIN_PAGE_URL = "https://www.saucedemo.com/";
-    protected static final Logger logger = LogManager.getLogger(LoginPageSteps.class);
 
     public LoginPageSteps() {
         loginPage = new LoginPage();
@@ -35,5 +35,10 @@ public class LoginPageSteps {
     @Then("the user {string} the element {string} has texts {string}")
     public void theUserTheElementHasTexts(String action, String element, String expectedTexts) {
         loginPage.verifyElementWithTexts(action, element, expectedTexts);
+    }
+
+    @Then("the user {string} the following texts")
+    public void theUserStringTheFollowingTexts(String action, DataTable data) {
+        loginPage.verifyTextsInLoginPage(action, data.asList());
     }
 }

@@ -11,3 +11,4 @@ The Runner class is using cucumber-junit to run the tests
 
 ## Hook class file ##
 The Hook class file contains the @Before / @After (Scenario) block of code to initialize the Web Driver before each scenario and close it after each scenario.
+- Need to initialize the Web Driver Wait for each scenario as methods / variables are all static, else it will fail (using the previous one).

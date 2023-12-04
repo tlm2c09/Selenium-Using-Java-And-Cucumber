@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import static configs.DriverManager.getDriver;
 import static configs.DriverManager.quitDriver;
+import static utils.WaitsUtil.initializeNewWebDriverWait;
 
 public class Hook {
     private static final Logger logger = LogManager.getLogger(Hook.class);
@@ -14,6 +15,7 @@ public class Hook {
     @Before
     public void beforeScenario(){
         getDriver();
+        initializeNewWebDriverWait();
     }
 
     @After
