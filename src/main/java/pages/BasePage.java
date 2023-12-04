@@ -16,11 +16,6 @@ import static utils.WaitsUtil.waitForElementToBeVisible;
 public class BasePage {
 
     public static final Logger logger = LogManager.getLogger(BasePage.class);
-    public WebDriver driver;
-
-    public BasePage() {
-        this.driver = DriverManager.getDriver();
-    }
 
     public void clickOnElement(By by) {
         WebElement element = waitForElementToBeClickable(by);

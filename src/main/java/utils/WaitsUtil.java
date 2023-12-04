@@ -17,13 +17,8 @@ public class WaitsUtil {
     private static WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10));
     private static final Logger logger = LogManager.getLogger(WaitsUtil.class);
 
-//    static {
-//        initializeNewWebDriverWait();
-//    }
-
     public static void initializeNewWebDriverWait() {
         wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10));
-        logger.info("Wait Manger: " + wait);
     }
 
     public WaitsUtil(WebDriver driver) {
@@ -41,7 +36,6 @@ public class WaitsUtil {
     public static void waitForElementInvisibility(By locator) {
         wait.until(invisibilityOfElementLocated(locator));
     }
-
 
     public static void waitForPageTitleToBe(String title) {
         wait.until(titleIs(title));

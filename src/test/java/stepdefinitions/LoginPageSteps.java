@@ -32,6 +32,13 @@ public class LoginPageSteps {
         loginPage.clickOnElement(elementType, element);
     }
 
+    @When("the user logins with username {string} and password {string}")
+    public void the_user_logins_with_username_and_password(String username, String password) {
+        loginPage.enterTextsInLoginPage("username", username);
+        loginPage.enterTextsInLoginPage("password", password);
+        loginPage.clickOnElement("button", "login");
+    }
+
     @Then("the user {string} the element {string} has texts {string}")
     public void theUserTheElementHasTexts(String action, String element, String expectedTexts) {
         loginPage.verifyElementWithTexts(action, element, expectedTexts);

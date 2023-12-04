@@ -1,6 +1,5 @@
 package pages;
 
-import configs.DriverManager;
 import io.cucumber.core.exception.CucumberException;
 import locators.LoginPageLocators;
 import org.apache.logging.log4j.LogManager;

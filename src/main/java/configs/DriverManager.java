@@ -37,10 +37,10 @@ public class DriverManager {
     private static ChromeOptions getChromeOptions() {
         ChromeOptions options = new ChromeOptions();
         //Set capabilities
-//        options.setCapability("timeouts", "600000");
+
         //Set arguments. Available arguments: https://github.com/GoogleChrome/chrome-launcher/blob/main/docs/chrome-flags-for-tools.md
         options.addArguments("--start-maximized");
-//        options.addArguments("--headless=new");
+        options.addArguments("--headless=new");
 
         return options;
     }
