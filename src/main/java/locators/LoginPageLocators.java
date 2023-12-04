@@ -17,4 +17,10 @@ public class LoginPageLocators {
         locator.put("login", "//input[@id='login-button']");
         return locator;
     }
+
+    public static Map<String, String> elementLocators() {
+        Map<String, String> locator = new HashMap<>();
+        locator.put("error message", "//h3[@data-test='error']");
+        return locator;
+    }
 }

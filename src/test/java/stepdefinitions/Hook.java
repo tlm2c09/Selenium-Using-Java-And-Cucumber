@@ -12,12 +12,12 @@ public class Hook {
     private static final Logger logger = LogManager.getLogger(Hook.class);
 
     @Before
-    public void initializeWebDriver(){
+    public void beforeScenario(){
         getDriver();
     }
 
     @After
-    public void closeWebDriver(){
+    public void afterScenario(){
         quitDriver();
     }
 

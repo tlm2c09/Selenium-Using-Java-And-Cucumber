@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 
 import static utils.WaitsUtil.waitForElementToBeVisible;
 
+
 public class InventoryPage extends BasePage {
 
     protected static final Logger logger = LogManager.getLogger(InventoryPage.class);

@@ -1,10 +1,7 @@
 package stepdefinitions;
 
-import configs.DriverManager;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 import pages.InventoryPage;
-import pages.LoginPage;
 
 public class InventoryPageSteps {
     InventoryPage inventoryPage;

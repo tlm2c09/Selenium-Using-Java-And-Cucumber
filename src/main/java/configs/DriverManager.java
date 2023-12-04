@@ -20,6 +20,7 @@ public class DriverManager {
     public static WebDriver getDriver() {
         if (driver == null) {
             initializeDriver();
+            logger.info("New driver is initialized: " + driver);
         }
         return driver;
     }
@@ -27,14 +28,9 @@ public class DriverManager {
     private static void initializeDriver() {
         String browser = System.getProperty("browser");
         switch (browser.toLowerCase()) {
-            case "chrome":
-                driver = new ChromeDriver(getChromeOptions());
-                break;
-            case "firefox":
-                driver = new FirefoxDriver(getFirefoxOptions());
-                break;
-            default:
-                throw new IllegalArgumentException("Unsupported browser: " + browser);
+            case "chrome" -> driver = new ChromeDriver(getChromeOptions());
+            case "firefox" -> driver = new FirefoxDriver(getFirefoxOptions());
+            default -> throw new IllegalArgumentException("Unsupported browser: " + browser);
         }
     }
 
@@ -57,6 +53,7 @@ public class DriverManager {
 
     public static void quitDriver() {
         if (driver != null) {
+            logger.info("Closing the driver '{}'", driver);
             driver.quit();
             driver = null;
         }
