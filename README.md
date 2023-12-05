@@ -13,7 +13,7 @@ The Hook class file contains the `@Before / @After` (Scenario) block of code to 
 - Hook is placed in the same package / directory with the step definition files
 - Cucumber will automatically detect and execute the hooks defined in the hook file based on their annotations. Ex: `@Before / @After`
 - Need to initialize the Web Driver Wait for each scenario as methods / variables are all static, else it will fail (using the previous one).
-
+- Take screenshot if the scenario fails and attach the screenshot to the Cucumber report 
 ## Driver Manager class file ##
 to manage the WebDriver instances. It typically provides methods to initialize and close the WebDriver, retrieve the current WebDriver instance, and perform other related tasks.
 
