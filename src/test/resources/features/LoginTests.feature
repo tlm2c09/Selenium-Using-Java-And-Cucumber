@@ -12,7 +12,7 @@ Feature: Login Tests
     When the user starts a new browser "locked user"
     Given the user goes to the login page
     When the user enters username "@TD:locked_out_user_username" and password "@TD:locked_out_user_password"
-    When the user clicks the "button" "login"
+    When the user clicks the "button" "login1"
     Then the user "sees" the element "error message" has texts "Epic sadface: Sorry, this user has been locked out."
 
     And the user switches to the browser "initial"

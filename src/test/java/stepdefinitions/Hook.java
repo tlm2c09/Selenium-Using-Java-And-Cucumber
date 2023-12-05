@@ -2,14 +2,14 @@ package stepdefinitions;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import io.cucumber.java.Scenario;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 
 import static configs.DriverManager.*;
 import static utils.WaitsUtil.initializeNewWebDriverWait;
 
 public class Hook {
-    private static final Logger logger = LogManager.getLogger(Hook.class);
     final String BROWSER = System.getProperty("browser");
     @Before
     public void beforeScenario(){
@@ -18,8 +18,15 @@ public class Hook {
     }
 
     @After
-    public void afterScenario(){
+    public void afterScenario(Scenario scenario){
+        if (scenario.isFailed()) {
+            scenario.attach(takeScreenshot(), "image/png", scenario.getName());
+        }
         closeAllDrivers();
+    }
+
+    public static byte[] takeScreenshot() {
+        return  ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 
 }
