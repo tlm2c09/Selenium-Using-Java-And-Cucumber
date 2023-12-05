@@ -7,31 +7,30 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
+
+import static utils.WaitsUtil.initializeNewWebDriverWait;
+import static utils.WaitsUtil.wait;
 
 public class DriverManager {
 
     public static WebDriver driver;
     private static final Logger logger = LogManager.getLogger(DriverManager.class);
-
-    private DriverManager() {
-        // Private constructor to prevent instantiation
-    }
-
-    public static WebDriver getDriver() {
-        if (driver == null) {
-            initializeDriver();
-            logger.info("New driver is initialized: " + driver);
-        }
-        return driver;
-    }
-
-    private static void initializeDriver() {
-        String browser = System.getProperty("browser");
+    public static Map<String, WebDriver> activeDrivers = new HashMap<>();
+    public static WebDriver initializeDriver(String browser) {
         switch (browser.toLowerCase()) {
             case "chrome" -> driver = new ChromeDriver(getChromeOptions());
             case "firefox" -> driver = new FirefoxDriver(getFirefoxOptions());
             default -> throw new IllegalArgumentException("Unsupported browser: " + browser);
         }
+        if (activeDrivers.size() == 0) {
+            activeDrivers.put("initial", driver);
+        }
+        return driver;
     }
 
     private static ChromeOptions getChromeOptions() {
@@ -40,7 +39,7 @@ public class DriverManager {
 
         //Set arguments. Available arguments: https://github.com/GoogleChrome/chrome-launcher/blob/main/docs/chrome-flags-for-tools.md
         options.addArguments("--start-maximized");
-        options.addArguments("--headless=new");
+//        options.addArguments("--headless=new");
 
         return options;
     }
@@ -51,11 +50,24 @@ public class DriverManager {
         return options;
     }
 
-    public static void quitDriver() {
-        if (driver != null) {
-            logger.info("Closing the driver '{}'", driver);
+    public static void closeAllDrivers() {
+        activeDrivers.forEach((session, driver) -> {
+            logger.info("Closing session '{}' with the driver '{}'", session, driver);
             driver.quit();
-            driver = null;
-        }
+        });
+        activeDrivers = null;
     }
+
+    public static void startNewBrowser(String sessionName) {
+        String browser = System.getProperty("browser");
+        DriverManager.driver = initializeDriver(browser);
+        initializeNewWebDriverWait();
+        activeDrivers.put(sessionName, DriverManager.driver);
+    }
+
+    public static void switchToBrowser(String sessionName){
+        DriverManager.driver = activeDrivers.get(sessionName);
+        wait = new WebDriverWait(DriverManager.driver, Duration.ofSeconds(10));
+    }
+
 }

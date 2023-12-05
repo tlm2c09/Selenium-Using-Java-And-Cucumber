@@ -39,3 +39,8 @@ to manage the WebDriver instances. It typically provides methods to initialize a
 
 ## Step Definition class files ##
 - Avoid using Static fields: Cucumber typically creates a new instance of the step definition class for each scenario. Using static fields may lead to unexpected behaviour.
+
+## Test Data ##
+- Load the Test Data JSON file based on the environment property 'env', and convert it into a Map<String, String> object
+- To read test data in the feature file, the passed test data will need to start with '@TD:' following with key's name.
+- Generate random test data using Faker library

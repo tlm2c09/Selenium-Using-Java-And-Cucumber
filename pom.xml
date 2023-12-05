@@ -65,6 +65,12 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.16.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.github.javafaker/javafaker -->
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>1.0.2</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

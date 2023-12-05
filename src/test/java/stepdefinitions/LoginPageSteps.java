@@ -18,7 +18,7 @@ public class LoginPageSteps {
 
     @When("the user goes to the login page")
     public void the_user_goes_to_the_login_page(){
-        DriverManager.getDriver().get(LOGIN_PAGE_URL);
+        DriverManager.driver.get(LOGIN_PAGE_URL);
     }
 
     @When("the user enters username {string} and password {string}")

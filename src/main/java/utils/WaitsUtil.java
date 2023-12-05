@@ -14,11 +14,11 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public class WaitsUtil {
 
-    private static WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10));
+    public static WebDriverWait wait = new WebDriverWait(DriverManager.driver, Duration.ofSeconds(10));
     private static final Logger logger = LogManager.getLogger(WaitsUtil.class);
 
     public static void initializeNewWebDriverWait() {
-        wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10));
+        wait = new WebDriverWait(DriverManager.driver, Duration.ofSeconds(10));
     }
 
     public WaitsUtil(WebDriver driver) {

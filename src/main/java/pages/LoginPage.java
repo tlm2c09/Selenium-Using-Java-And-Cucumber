@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import java.util.List;
 import java.util.Map;
 
+import static utils.TestDataLoader.getTestData;
 import static utils.WaitsUtil.waitForElementNotToHaveExactTexts;
 import static utils.WaitsUtil.waitForElementToHaveExactTexts;
 
@@ -21,6 +22,7 @@ public class LoginPage extends BasePage {
     Map<String, String> elementLocators = LoginPageLocators.elementLocators();
 
     public void enterTextsInLoginPage(String element, String textsToEnter) {
+        textsToEnter = getTestData(textsToEnter);
         String locator = textFieldLocators.get(element);
         enterTexts(By.xpath(locator), textsToEnter);
         logger.info("Entered texts '{}' for element '{}'", textsToEnter, element);
