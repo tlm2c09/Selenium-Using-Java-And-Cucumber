@@ -2,7 +2,7 @@ package utils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Assert;
+import org.testng.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 
@@ -11,7 +11,6 @@ import java.util.Set;
 
 import static configs.DriverManager.driver;
 import static utils.WaitsUtil.waitForAlertToBePresent;
-import static utils.WaitsUtil.waitForElementToBeVisible;
 
 public class BrowserInteractions {
     private static final Logger logger = LogManager.getLogger(BrowserInteractions.class);

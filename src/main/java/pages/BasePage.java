@@ -3,13 +3,16 @@ package pages;
 import io.cucumber.core.exception.CucumberException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Assert;
+import org.testng.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.LocalFileDetector;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
+import static configs.DriverManager.driver;
 import static utils.WaitsUtil.*;
 
 public class BasePage {
@@ -47,6 +50,12 @@ public class BasePage {
     }
 
     public void uploadFile(By by, String absolutePath){
+        WebElement fileInput = waitForElementToBeVisible(by);
+        fileInput.sendKeys(absolutePath);
+    }
+
+    public void uploadFileToRemoteServer(By by, String absolutePath){
+        ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
         WebElement fileInput = waitForElementToBeVisible(by);
         fileInput.sendKeys(absolutePath);
     }

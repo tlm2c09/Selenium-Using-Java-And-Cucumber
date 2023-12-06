@@ -39,7 +39,7 @@ to manage the WebDriver instances. It typically provides methods to initialize a
     - `Root` Logger: The default logger that applies to all classes unless overridden: `level = info`
 
 ## Step Definition class files ##
-- Avoid using Static fields: Cucumber typically creates a new instance of the step definition class for each scenario. Using static fields may lead to unexpected behaviour.
+- Avoid using Static fields: Cucumber typically creates a new instance of the step definition class (glue code classes) before each scenario. Using static fields may lead to unexpected behaviour.
 
 ## Test Data ##
 - Load the Test Data JSON file based on the environment property 'env', and convert it into a Map<String, String> object
