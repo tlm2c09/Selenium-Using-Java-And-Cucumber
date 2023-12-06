@@ -9,35 +9,35 @@ import org.openqa.selenium.interactions.Actions;
 import java.util.ArrayList;
 import java.util.Set;
 
-import static configs.DriverManager.driver;
+import static configs.DriverManager.*;
 import static utils.WaitsUtil.waitForAlertToBePresent;
 
 public class BrowserInteractions {
-    private static final Logger logger = LogManager.getLogger(BrowserInteractions.class);
-    private static final Actions actions = new Actions(driver);
+    private static final Logger logger = LogManager.getLogger(BrowserInteractions.class.getSimpleName());
+    private static final Actions actions = new Actions(activeDriversThread.get().get(CURRENT_DRIVER_NAME));
 
     public String getTitle() {
-        return driver.getTitle();
+        return activeDriversThread.get().get(CURRENT_DRIVER_NAME).getTitle();
     }
 
     public String getCurrentUrl() {
-        return driver.getCurrentUrl();
+        return activeDriversThread.get().get(CURRENT_DRIVER_NAME).getCurrentUrl();
     }
 
     public void navigateToUrl(String url) {
-        driver.get(url);
+        activeDriversThread.get().get(CURRENT_DRIVER_NAME).get(url);
     }
 
     public void refreshPage() {
-        driver.navigate().refresh();
+        activeDriversThread.get().get(CURRENT_DRIVER_NAME).navigate().refresh();
     }
 
     public void navigateBack() {
-        driver.navigate().back();
+        activeDriversThread.get().get(CURRENT_DRIVER_NAME).navigate().back();
     }
 
     public void navigateForward() {
-        driver.navigate().forward();
+        activeDriversThread.get().get(CURRENT_DRIVER_NAME).navigate().forward();
     }
 
     public void handleAlert(String action) {
@@ -50,34 +50,34 @@ public class BrowserInteractions {
     }
 
     public void switchToIframe(WebElement element) {
-        driver.switchTo().frame(element);
+        activeDriversThread.get().get(CURRENT_DRIVER_NAME).switchTo().frame(element);
     }
 
     public void switchToIframe(int index) {
-        driver.switchTo().frame(index);
+        activeDriversThread.get().get(CURRENT_DRIVER_NAME).switchTo().frame(index);
     }
 
     public void switchToIframe(String frameNameOrId) {
-        driver.switchTo().frame(frameNameOrId);
+        activeDriversThread.get().get(CURRENT_DRIVER_NAME).switchTo().frame(frameNameOrId);
     }
 
     public void switchToDefaultFrame() {
-        driver.switchTo().defaultContent();
+        activeDriversThread.get().get(CURRENT_DRIVER_NAME).switchTo().defaultContent();
     }
 
     public void switchToWindowHandle(int index) {
         ArrayList<String> allWindowHandles = (ArrayList<String>) getAllWindowHandles();
-        driver.switchTo().window(allWindowHandles.get(index));
+        activeDriversThread.get().get(CURRENT_DRIVER_NAME).switchTo().window(allWindowHandles.get(index));
         logger.info("Switch to window handle '{}'", allWindowHandles.get(index));
     }
 
     public Set<String> getAllWindowHandles() {
         logger.info("All active window handles are: {}", getAllWindowHandles());
-        return driver.getWindowHandles();
+        return activeDriversThread.get().get(CURRENT_DRIVER_NAME).getWindowHandles();
     }
 
     public void openANewTab() {
-        driver.switchTo().newWindow(WindowType.TAB);
+        activeDriversThread.get().get(CURRENT_DRIVER_NAME).switchTo().newWindow(WindowType.TAB);
     }
 
     public void sendKey(String key) {

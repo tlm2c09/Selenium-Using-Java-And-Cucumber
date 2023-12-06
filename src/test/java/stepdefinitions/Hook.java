@@ -10,10 +10,11 @@ import static configs.DriverManager.*;
 import static utils.WaitsUtil.initializeNewWebDriverWait;
 
 public class Hook {
-    final String BROWSER = System.getProperty("browser");
+    final String BROWSER_NAME = System.getProperty("browser");
     @Before
-    public void beforeScenario(){
-        initializeDriver(BROWSER);
+    public void beforeScenario(Scenario scenario){
+        scenarioThread.set(scenario.getName());
+        initializeBrowser(BROWSER_NAME);
         initializeNewWebDriverWait();
     }
 
@@ -22,11 +23,11 @@ public class Hook {
         if (scenario.isFailed()) {
             scenario.attach(takeScreenshot(), "image/png", scenario.getName());
         }
-        closeAllDrivers();
+        closeAllBrowsers();
     }
 
     public static byte[] takeScreenshot() {
-        return  ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+        return  ((TakesScreenshot) activeDriversThread.get().get(CURRENT_DRIVER_NAME)).getScreenshotAs(OutputType.BYTES);
     }
 
 }

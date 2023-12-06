@@ -14,7 +14,7 @@ public class TestDataLoader {
 
     private static final String TEST_ENVIRONMENT = System.getProperty("env");
     private static final String TEST_DATA_FILE_PATH = String.format("src/main/resources/testdata/%s_ENV_DATA.json", TEST_ENVIRONMENT);
-    private static final Logger logger = LogManager.getLogger(TestDataLoader.class);
+    private static final Logger logger = LogManager.getLogger(TestDataLoader.class.getSimpleName());
     static Faker faker = new Faker();
     static Map<String, String> testData;
 

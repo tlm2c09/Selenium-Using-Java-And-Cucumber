@@ -2,11 +2,8 @@ package configs;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -19,30 +16,34 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
-import static utils.WaitsUtil.initializeNewWebDriverWait;
-import static utils.WaitsUtil.wait;
+import static utils.WaitsUtil.*;
 
 public class DriverManager {
 
     public static WebDriver driver;
-    private static final Logger logger = LogManager.getLogger(DriverManager.class);
-    public static Map<String, WebDriver> activeDrivers = new HashMap<>();
+    private static final Logger logger = LogManager.getLogger(DriverManager.class.getSimpleName());
     static String GRID_HUB_URL = "http://localhost:4444/wd/hub";
+    public static final ThreadLocal<Map<String, WebDriver>> activeDriversThread = new ThreadLocal<>();
+    public static final ThreadLocal<String> scenarioThread = new ThreadLocal<>();
+    public static String CURRENT_DRIVER_NAME;
 
-    public static WebDriver initializeDriver(String browser) {
+    public static WebDriver initializeBrowser(String browserName) {
+        WebDriver driver;
         URL url;
         try {
             url = new URI(GRID_HUB_URL).toURL();
         } catch (URISyntaxException | MalformedURLException e) {
             throw new RuntimeException(e.getMessage());
         }
-        switch (browser.toLowerCase()) {
+        switch (browserName.toLowerCase()) {
             case "chrome" -> driver = new RemoteWebDriver(url, getChromeOptions());
             case "firefox" -> driver = new RemoteWebDriver(url, getFirefoxOptions());
-            default -> throw new IllegalArgumentException("Unsupported browser: " + browser);
+            default -> throw new IllegalArgumentException("Unsupported browser: " + browserName);
         }
-        if (activeDrivers.size() == 0) {
-            activeDrivers.put("initial", driver);
+        if (activeDriversThread.get() == null) {
+            activeDriversThread.set(new HashMap<>());
+            activeDriversThread.get().put("initial", driver);
+            CURRENT_DRIVER_NAME = "initial";
         }
         return driver;
     }
@@ -50,7 +51,8 @@ public class DriverManager {
     private static ChromeOptions getChromeOptions() {
         ChromeOptions options = new ChromeOptions();
         //Set capabilities
-
+        options.setCapability("se:name", scenarioThread.get());
+        options.setCapability("platformName", System.getProperty("os.name"));
         //Set arguments. Available arguments: https://github.com/GoogleChrome/chrome-launcher/blob/main/docs/chrome-flags-for-tools.md
         options.addArguments("--start-maximized");
         options.addArguments("--headless=new");
@@ -64,24 +66,27 @@ public class DriverManager {
         return options;
     }
 
-    public static void closeAllDrivers() {
-        activeDrivers.forEach((session, driver) -> {
+    public static void closeAllBrowsers() {
+        activeDriversThread.get().forEach((session, driver) -> {
             logger.info("Closing session '{}' with the driver '{}'", session, driver);
             driver.quit();
         });
-        activeDrivers = new HashMap<>();
+        activeDriversThread.remove();
     }
 
     public static void startNewBrowser(String sessionName) {
         String browser = System.getProperty("browser");
-        DriverManager.driver = initializeDriver(browser);
+        logger.info("Starting new browser '{}'", sessionName);
+        activeDriversThread.get().put(sessionName, initializeBrowser(browser));
+        CURRENT_DRIVER_NAME = sessionName;
+        logger.info("CURRENT_DRIVER_NAME: {}", CURRENT_DRIVER_NAME);
+        logger.info("List of active browsers: " + activeDriversThread.get());
         initializeNewWebDriverWait();
-        activeDrivers.put(sessionName, DriverManager.driver);
     }
 
     public static void switchToBrowser(String sessionName) {
-        DriverManager.driver = activeDrivers.get(sessionName);
-        wait = new WebDriverWait(DriverManager.driver, Duration.ofSeconds(10));
+        CURRENT_DRIVER_NAME = sessionName;
+        waitThread.set(new WebDriverWait(activeDriversThread.get().get(sessionName), Duration.ofSeconds(10)));
     }
 
 }

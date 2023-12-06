@@ -16,7 +16,7 @@ import static utils.WaitsUtil.waitForElementToHaveExactTexts;
 
 public class LoginPage extends BasePage {
 
-    protected static final Logger logger = LogManager.getLogger(LoginPage.class);
+    protected static final Logger logger = LogManager.getLogger(LoginPage.class.getSimpleName());
     Map<String, String> textFieldLocators = LoginPageLocators.textFieldLocators();
     Map<String, String> buttonLocators = LoginPageLocators.buttonLocators();
     Map<String, String> elementLocators = LoginPageLocators.elementLocators();

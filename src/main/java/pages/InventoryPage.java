@@ -15,7 +15,7 @@ import static utils.WaitsUtil.waitForElementToBeVisible;
 
 public class InventoryPage extends BasePage {
 
-    protected static final Logger logger = LogManager.getLogger(InventoryPage.class);
+    protected static final Logger logger = LogManager.getLogger(InventoryPage.class.getSimpleName());
 
     public void userIsAtInventoryPage() {
         waitForElementToBeVisible(By.xpath("//div[@id='inventory_container']"));

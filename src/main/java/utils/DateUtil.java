@@ -9,7 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtil {
-    private static final Logger logger = LogManager.getLogger(DateUtil.class);
+    private static final Logger logger = LogManager.getLogger(DateUtil.class.getSimpleName());
     public static String formatDate(String dateString, String dateFormat) {
         String value;
         if (dateString.equalsIgnoreCase("today")) {

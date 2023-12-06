@@ -4,9 +4,9 @@ import configs.DriverManager;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import pages.LoginPage;
+
+import static configs.DriverManager.CURRENT_DRIVER_NAME;
 
 public class LoginPageSteps {
     LoginPage loginPage;
@@ -18,7 +18,7 @@ public class LoginPageSteps {
 
     @When("the user goes to the login page")
     public void the_user_goes_to_the_login_page(){
-        DriverManager.driver.get(LOGIN_PAGE_URL);
+        DriverManager.activeDriversThread.get().get(CURRENT_DRIVER_NAME).get(LOGIN_PAGE_URL);
     }
 
     @When("the user enters username {string} and password {string}")

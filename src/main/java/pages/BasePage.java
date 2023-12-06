@@ -12,12 +12,12 @@ import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
-import static configs.DriverManager.driver;
+import static configs.DriverManager.*;
 import static utils.WaitsUtil.*;
 
 public class BasePage {
 
-    public static final Logger logger = LogManager.getLogger(BasePage.class);
+    public static final Logger logger = LogManager.getLogger(BasePage.class.getSimpleName());
 
     public void clickOnElement(By by) {
         WebElement element = waitForElementToBeClickable(by);
@@ -25,7 +25,7 @@ public class BasePage {
     }
 
     public void enterTexts(By by, String texts) {
-        WebElement element = waitForElementToBeClickable(by);
+        WebElement element = waitForElementToBeVisible(by);
         element.clear();
         element.sendKeys(texts);
     }
@@ -55,7 +55,7 @@ public class BasePage {
     }
 
     public void uploadFileToRemoteServer(By by, String absolutePath){
-        ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
+        ((RemoteWebDriver) activeDriversThread.get().get(CURRENT_DRIVER_NAME)).setFileDetector(new LocalFileDetector());
         WebElement fileInput = waitForElementToBeVisible(by);
         fileInput.sendKeys(absolutePath);
     }
