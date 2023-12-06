@@ -18,6 +18,7 @@ The Hook class file contains the `@Before / @After` (Scenario) block of code to 
 to manage the WebDriver instances. It typically provides methods to initialize and close the WebDriver, retrieve the current WebDriver instance, and perform other related tasks.
 
 ## Wait Utils ##
+- Reference: https://www.selenium.dev/selenium/docs/api/java/org/openqa/selenium/support/ui/ExpectedConditions.html
 
 ## POM file ##
 - Required dependencies:
@@ -44,3 +45,8 @@ to manage the WebDriver instances. It typically provides methods to initialize a
 - Load the Test Data JSON file based on the environment property 'env', and convert it into a Map<String, String> object
 - To read test data in the feature file, the passed test data will need to start with '@TD:' following with key's name.
 - Generate random test data using Faker library
+
+## Locator ##
+- If HTML IDs are available, unique, and consistently predictable, they are the preferred method for locating an element on a page.
+- If unique IDs are unavailable, a well-written CSS selector is the preferred method of locating an element. XPath works as well as CSS selectors, but the syntax is complicated and frequently difficult to debug.
+- Reference: https://www.selenium.dev/documentation/test_practices/encouraged/locators/

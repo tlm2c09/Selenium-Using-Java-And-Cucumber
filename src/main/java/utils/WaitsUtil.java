@@ -1,8 +1,10 @@
 package utils;
 
 import configs.DriverManager;
+import io.cucumber.core.exception.CucumberException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -51,5 +53,33 @@ public class WaitsUtil {
 
     public static void waitForElementNotToHaveExactTexts(By by, String expectedTexts) {
         wait.until(not(textToBe(by, expectedTexts)));
+    }
+
+    public static void waitForAttributeOfElementToContain(By by, String attribute, String value) {
+        wait.until(attributeContains(by, attribute, value));
+    }
+
+    public static void waitForAttributeOfElementToNotContain(By by, String attribute, String value) {
+        wait.until(not(attributeContains(by, attribute, value)));
+    }
+
+    public static Alert waitForAlertToBePresent() {
+        return wait.until(alertIsPresent());
+    }
+
+    public static void waitForElementToStale(WebElement element) {
+        wait.until(refreshed(stalenessOf(element)));
+    }
+
+    public static void waitFor(String unit, int number){
+        try {
+            switch (unit) {
+                case "seconds" -> Thread.sleep(Duration.ofSeconds(number));
+                case "minutes" -> Thread.sleep(Duration.ofMinutes(number));
+                default -> throw new CucumberException("Invalid unit " + unit);
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

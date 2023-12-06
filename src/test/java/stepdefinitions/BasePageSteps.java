@@ -6,6 +6,8 @@ import io.cucumber.java.en.Then;
 import pages.BasePage;
 import utils.TestDataLoader;
 
+import static utils.WaitsUtil.waitFor;
+
 public class BasePageSteps {
     BasePage basePage;
 
@@ -31,5 +33,10 @@ public class BasePageSteps {
     @Then("the user generates random value for {string}")
     public void the_user_generates_value_string_as_test_data_string(String key) {
         TestDataLoader.generateRandomValueForKey(key);
+    }
+
+    @Then("the user waits for {int} {string} in the current page")
+    public void the_user_waits_for_int_string_in_the_current_page(int numberOf, String unit) {
+        waitFor(unit, numberOf);
     }
 }

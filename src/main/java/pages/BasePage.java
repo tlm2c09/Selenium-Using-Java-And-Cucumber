@@ -1,10 +1,12 @@
 package pages;
 
+import io.cucumber.core.exception.CucumberException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
@@ -42,5 +44,34 @@ public class BasePage {
                 logger.info("The page does not contain expected text '{}'", text);
             });
         }
+    }
+
+    public void uploadFile(By by, String absolutePath){
+        WebElement fileInput = waitForElementToBeVisible(by);
+        fileInput.sendKeys(absolutePath);
+    }
+
+    public void selectOptionFromDropdownByValue(By dropdown, String selectType,String option) {
+        Select select = new Select(waitForElementToBeVisible(dropdown));
+        switch (selectType) {
+            case "text" -> select.selectByVisibleText(option);
+            case "value" -> select.selectByValue(option);
+            case "index" -> select.selectByIndex(Integer.parseInt(option));
+            default -> throw new CucumberException("Unknown option. Valid values are: {'text', 'value', 'index'}");
+        }
+    }
+
+    public void selectCheckbox(String action, By by) {
+        WebElement checkbox = waitForElementToBeVisible(by);
+        Assert.assertTrue(action.equalsIgnoreCase("checks") || action.equalsIgnoreCase("unchecks"));
+        boolean toCheck = action.equalsIgnoreCase("checks");
+        boolean isChecked = checkbox.isSelected();
+        if (toCheck != isChecked) {
+            checkbox.click();
+        } else logger.info("The checkbox '{}' is already in the expected state", by);
+    }
+
+    public String getCssValueOfElement(By by, String propertyName) {
+        return waitForElementToBeVisible(by).getCssValue(propertyName);
     }
 }
