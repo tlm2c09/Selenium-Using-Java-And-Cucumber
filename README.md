@@ -49,10 +49,13 @@ to manage the WebDriver instances. It typically provides methods to initialize a
 - Hub: is composed by the following [components](https://www.selenium.dev/documentation/grid/components/): Router, Distributor, Session Map, New Session Queue, and Event Bus.
   - `java -jar selenium-server-<version>.jar hub`
   - By default, the server will listen for RemoteWebDriver requests on http://localhost:4444
-- Node: detect the available drivers that it can use from the System PATH else can use the parameter `--selenium-manger true` to use Selenium Manager library instead
-  - `java -jar selenium-server-<version>.jar node --hub http://<hub-ip>:4444 --selenium-manager true`
+- Node: detect the available drivers that it can use from the System PATH else can use the parameter `--selenium-manger true` to use Selenium Manager library instead.
+  - Also detect the number of processors available (corresponding to the number of concurrent sessions)
+    - `java -jar selenium-server-<version>.jar node --hub http://<hub-ip>:4444 --selenium-manager true`
 - Hub and Nodes talk to each other via HTTP and the [Event Bus](https://www.selenium.dev/documentation/grid/components/#event-bus) (the Event Bus lives inside the Hub).
-Reference: [Selenium Grid](https://www.selenium.dev/documentation/grid/)
+- Modes:
+  - Standalone:
+- Reference: [Selenium Grid](https://www.selenium.dev/documentation/grid/)
 2. Configure Cucumber to run tests in parallel with TestNG
 - In `TestRunner.java`, the class needs to extend the class `AbstractTestNGCucumberTests`, and overrides the method `scenarios` with `@DataProvider(parallel=true)`.
 - Add the Maven Surefire plugin configuration to the build section of the POM.

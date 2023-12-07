@@ -2,9 +2,12 @@ package configs;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -36,8 +39,9 @@ public class DriverManager {
             throw new RuntimeException(e.getMessage());
         }
         switch (browserName.toLowerCase()) {
-            case "chrome" -> driver = new RemoteWebDriver(url, getChromeOptions());
-            case "firefox" -> driver = new RemoteWebDriver(url, getFirefoxOptions());
+            case "chrome" -> driver = new RemoteWebDriver(url, setOptions(getChromeOptions()));
+            case "firefox" -> driver = new RemoteWebDriver(url, setOptions(getFirefoxOptions()));
+            case "edge" -> driver = new RemoteWebDriver(url, setOptions(getEdgeOptions()));
             default -> throw new IllegalArgumentException("Unsupported browser: " + browserName);
         }
         if (activeDriversThread.get() == null) {
@@ -48,12 +52,21 @@ public class DriverManager {
         return driver;
     }
 
+    private static MutableCapabilities setOptions(MutableCapabilities options){
+        //common capabilities for all browsers: https://w3c.github.io/webdriver/#capabilities
+        options.setCapability("se:screenResolution", "1920x1080");
+        options.setCapability("se:name", scenarioThread.get());
+        options.setCapability(CapabilityType.PLATFORM_NAME, System.getProperty("os.name"));
+        logger.info("The browser's capabilities: " + options);
+        return options;
+    }
+
     private static ChromeOptions getChromeOptions() {
         ChromeOptions options = new ChromeOptions();
-        //Set capabilities
-        options.setCapability("se:name", scenarioThread.get());
-        options.setCapability("platformName", System.getProperty("os.name"));
-        //Set arguments. Available arguments: https://github.com/GoogleChrome/chrome-launcher/blob/main/docs/chrome-flags-for-tools.md
+        //Set specified capabilities for Chrome
+
+        //Set arguments
+        // Available arguments: https://github.com/GoogleChrome/chrome-launcher/blob/main/docs/chrome-flags-for-tools.md
         options.addArguments("--start-maximized");
         options.addArguments("--headless=new");
 
@@ -62,7 +75,21 @@ public class DriverManager {
 
     private static FirefoxOptions getFirefoxOptions() {
         FirefoxOptions options = new FirefoxOptions();
+        //Set specified capabilities for Firefox
+
+        //Set arguments
+        options.addArguments("-headless");
+        return options;
+    }
+
+    private static EdgeOptions getEdgeOptions() {
+        EdgeOptions options = new EdgeOptions();
+        //Set specified capabilities for Edge
+
+        //Set arguments
         options.addArguments("--start-maximized");
+        options.addArguments("--headless=new");
+
         return options;
     }
 
