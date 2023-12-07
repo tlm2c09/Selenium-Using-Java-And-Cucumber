@@ -1,0 +1,17 @@
+# config.yaml
+
+grid_url: "http://localhost:4444/wd/hub"
+appium_server_url: "http://0.0.0.0:4723/"
+browser: "chrome"
+
+android:
+  platform_name: "Android"
+  platform_version: "13.0"
+  automation_name: "uiautomator2"
+  udid: "emulator-5554"
+
+ios:
+  platform_name: "iOS"
+  platform_version: "TBD"
+  automation_name: "XCUITest"
+  udid: "TBD"

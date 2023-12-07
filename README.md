@@ -63,3 +63,22 @@ to manage the WebDriver instances. It typically provides methods to initialize a
 - In TestNG, the scenarios and rows in a scenario outline are executed in multiple threads.
 - To run tests in parallel by features, switch to use JUnit instead of TestNG in `TestRunner.java` class.
 Reference: [Parallel Execution with TestNG](https://cucumber.io/docs/guides/parallel-execution/?lang=java#testng)
+
+## Appium ##
+1. Install [Node.js](https://nodejs.org/)
+2. Install Appium 2.x: `npm install -g appium`. To start the Appium server: `appium`
+    - Install the driver itself
+      - Android: appium driver install uiautomator2
+      - iOS: 
+3. Setup Android SDK and virtual device
+4. Add ANDROID_HOME to Environment to [Environment Variables](https://developer.android.com/tools/variables).
+5. Add [Appium Java client](https://mvnrepository.com/artifact/io.appium/java-client/9.0.0) to POM file: this provides the `AppiumDriver` class
+6. Get started with Appium Inspector with the basic capabilities
+   - platformName: Android or iOS
+   - platformVersion
+   - automationName: uiautomator2 (Android)
+   - udid: 
+   - browserName: 
+7. To start / stop the Appium server, use the class `AppiumServer.java`.
+   - `AppiumServiceBuilder` to build the configurations for the Appium server like port, NodeJS location, Appium location etc
+   - `AppiumDriverLocalService` to start / stop the server

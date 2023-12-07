@@ -1,16 +1,23 @@
 package stepdefinitions;
 
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
-import io.cucumber.java.Scenario;
+import io.cucumber.java.*;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
+import static configs.AppiumServer.*;
 import static configs.DriverManager.*;
 import static utils.WaitsUtil.initializeNewWebDriverWait;
 
 public class Hook {
-    final String BROWSER_NAME = System.getProperty("browser");
+    static final String BROWSER_NAME = System.getProperty("browser");
+
+    @BeforeAll
+    public static void beforeAll(){
+        if (BROWSER_NAME.equalsIgnoreCase("android") || BROWSER_NAME.equalsIgnoreCase("ios")){
+            startAppiumServer();
+        }
+    }
+
     @Before
     public void beforeScenario(Scenario scenario){
         scenarioThread.set(scenario.getName());
@@ -28,6 +35,13 @@ public class Hook {
 
     public static byte[] takeScreenshot() {
         return  ((TakesScreenshot) activeDriversThread.get().get(CURRENT_DRIVER_NAME)).getScreenshotAs(OutputType.BYTES);
+    }
+
+    @AfterAll
+    public static void afterAll(){
+        if (BROWSER_NAME.equalsIgnoreCase("android") || BROWSER_NAME.equalsIgnoreCase("ios")){
+            stopAppiumServer();
+        }
     }
 
 }

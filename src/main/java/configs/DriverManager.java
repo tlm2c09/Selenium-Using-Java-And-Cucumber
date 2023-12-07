@@ -1,5 +1,7 @@
 package configs;
 
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.MutableCapabilities;
@@ -8,6 +10,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -23,9 +26,9 @@ import static utils.WaitsUtil.*;
 
 public class DriverManager {
 
-    public static WebDriver driver;
     private static final Logger logger = LogManager.getLogger(DriverManager.class.getSimpleName());
     static String GRID_HUB_URL = "http://localhost:4444/wd/hub";
+    static String APPIUM_SERVER_URL = "http://127.0.0.1:4723/";
     public static final ThreadLocal<Map<String, WebDriver>> activeDriversThread = new ThreadLocal<>();
     public static final ThreadLocal<String> scenarioThread = new ThreadLocal<>();
     public static String CURRENT_DRIVER_NAME;
@@ -42,6 +45,8 @@ public class DriverManager {
             case "chrome" -> driver = new RemoteWebDriver(url, setOptions(getChromeOptions()));
             case "firefox" -> driver = new RemoteWebDriver(url, setOptions(getFirefoxOptions()));
             case "edge" -> driver = new RemoteWebDriver(url, setOptions(getEdgeOptions()));
+            case "android" -> driver = initializeAndroidDriver();
+            case "ios" -> driver = initializeIOSDriver();
             default -> throw new IllegalArgumentException("Unsupported browser: " + browserName);
         }
         if (activeDriversThread.get() == null) {
@@ -91,6 +96,43 @@ public class DriverManager {
         options.addArguments("--headless=new");
 
         return options;
+    }
+
+    public static AndroidDriver initializeAndroidDriver(){
+        DesiredCapabilities caps = new DesiredCapabilities();
+        caps.setCapability("platformName", "Android");
+        caps.setCapability("platformVersion", "13.0");
+        caps.setCapability("automationName", "uiautomator2");
+        caps.setCapability("udid", "emulator-5554");
+        caps.setCapability("browserName", "Chrome");
+        caps.setCapability("chromedriver_autodownload", true);
+//        caps.setCapability("autoWebview", true);
+        AndroidDriver driver;
+        try {
+            URL url = new URI(APPIUM_SERVER_URL).toURL();
+            driver = new AndroidDriver(url, caps);
+        } catch (URISyntaxException | MalformedURLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+        return driver;
+    }
+
+    public static IOSDriver initializeIOSDriver(){
+        DesiredCapabilities caps = new DesiredCapabilities();
+        caps.setCapability("platformName", "iOS");
+        caps.setCapability("platformVersion", "TBD");
+        caps.setCapability("automationName", "XCUITest");
+        caps.setCapability("udid", "TBD");
+        caps.setCapability("autoWebview", true);
+        IOSDriver driver;
+        try {
+            URL url = new URI(APPIUM_SERVER_URL).toURL();
+            driver = new IOSDriver(url, caps);
+        } catch (URISyntaxException | MalformedURLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return driver;
     }
 
     public static void closeAllBrowsers() {
