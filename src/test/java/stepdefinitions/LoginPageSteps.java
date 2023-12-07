@@ -10,15 +10,9 @@ import static configs.DriverManager.CURRENT_DRIVER_NAME;
 
 public class LoginPageSteps {
     LoginPage loginPage;
-    private final String LOGIN_PAGE_URL = "https://www.saucedemo.com/";
 
     public LoginPageSteps() {
         loginPage = new LoginPage();
-    }
-
-    @When("the user goes to the login page")
-    public void the_user_goes_to_the_login_page(){
-        DriverManager.activeDriversThread.get().get(CURRENT_DRIVER_NAME).get(LOGIN_PAGE_URL);
     }
 
     @When("the user enters username {string} and password {string}")

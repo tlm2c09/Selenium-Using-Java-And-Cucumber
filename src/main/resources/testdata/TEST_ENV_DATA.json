@@ -4,5 +4,6 @@
   "standard_user_username": "standard_user",
   "standard_user_password": "secret_sauce",
   "performance_glitch_user_username": "performance_glitch_user",
-  "performance_glitch_user_password": "secret_sauce"
+  "performance_glitch_user_password": "secret_sauce",
+  "login_page": "https://www.saucedemo.com/"
 }

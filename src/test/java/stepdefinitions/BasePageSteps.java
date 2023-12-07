@@ -3,9 +3,11 @@ package stepdefinitions;
 import configs.DriverManager;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import pages.BasePage;
 import utils.TestDataLoader;
 
+import static configs.DriverManager.CURRENT_DRIVER_NAME;
 import static utils.WaitsUtil.waitFor;
 
 public class BasePageSteps {
@@ -38,5 +40,10 @@ public class BasePageSteps {
     @Then("the user waits for {int} {string} in the current page")
     public void the_user_waits_for_int_string_in_the_current_page(int numberOf, String unit) {
         waitFor(unit, numberOf);
+    }
+
+    @When("the user goes to the url {string}")
+    public void the_user_goes_to_the_url_string(String url){
+        DriverManager.activeDriversThread.get().get(CURRENT_DRIVER_NAME).get(TestDataLoader.getTestData(url));
     }
 }
