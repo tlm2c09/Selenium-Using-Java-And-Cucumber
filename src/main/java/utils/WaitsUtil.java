@@ -10,8 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-import static configs.DriverManager.CURRENT_DRIVER_NAME;
-import static configs.DriverManager.activeDriversThread;
+import static configs.DriverManager.*;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public class WaitsUtil {
@@ -20,11 +19,11 @@ public class WaitsUtil {
     public static ThreadLocal<WebDriverWait> waitThread = new ThreadLocal<>();
 
     public static void initializeNewWebDriverWait() {
-        waitThread.set(new WebDriverWait(activeDriversThread.get().get(CURRENT_DRIVER_NAME), Duration.ofSeconds(10)));
+        waitThread.set(new WebDriverWait(getDriver(), Duration.ofSeconds(10)));
     }
 
     public WaitsUtil() {
-        waitThread.set(new WebDriverWait(activeDriversThread.get().get(CURRENT_DRIVER_NAME), Duration.ofSeconds(10)));
+        waitThread.set(new WebDriverWait(getDriver(), Duration.ofSeconds(10)));
     }
 
     public static WebElement waitForElementToBeVisible(By locator) {

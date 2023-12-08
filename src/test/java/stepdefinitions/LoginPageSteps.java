@@ -1,12 +1,10 @@
 package stepdefinitions;
 
-import configs.DriverManager;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import pages.LoginPage;
 
-import static configs.DriverManager.CURRENT_DRIVER_NAME;
 
 public class LoginPageSteps {
     LoginPage loginPage;

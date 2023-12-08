@@ -7,7 +7,6 @@ import io.cucumber.java.en.When;
 import pages.BasePage;
 import utils.TestDataLoader;
 
-import static configs.DriverManager.CURRENT_DRIVER_NAME;
 import static utils.WaitsUtil.waitFor;
 
 public class BasePageSteps {
@@ -44,6 +43,6 @@ public class BasePageSteps {
 
     @When("the user goes to the url {string}")
     public void the_user_goes_to_the_url_string(String url){
-        DriverManager.activeDriversThread.get().get(CURRENT_DRIVER_NAME).get(TestDataLoader.getTestData(url));
+        DriverManager.getDriver().get(TestDataLoader.getTestData(url));
     }
 }

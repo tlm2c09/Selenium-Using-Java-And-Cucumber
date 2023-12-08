@@ -34,7 +34,7 @@ public class Hook {
     }
 
     public static byte[] takeScreenshot() {
-        return  ((TakesScreenshot) activeDriversThread.get().get(CURRENT_DRIVER_NAME)).getScreenshotAs(OutputType.BYTES);
+        return  ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BYTES);
     }
 
     @AfterAll

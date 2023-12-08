@@ -33,6 +33,10 @@ public class DriverManager {
     public static final ThreadLocal<String> scenarioThread = new ThreadLocal<>();
     public static String CURRENT_DRIVER_NAME;
 
+    public static WebDriver getDriver(){
+        return activeDriversThread.get().get(CURRENT_DRIVER_NAME);
+    }
+
     public static WebDriver initializeBrowser(String browserName) {
         WebDriver driver;
         URL url;
@@ -148,7 +152,6 @@ public class DriverManager {
         logger.info("Starting new browser '{}'", sessionName);
         activeDriversThread.get().put(sessionName, initializeBrowser(browser));
         CURRENT_DRIVER_NAME = sessionName;
-        logger.info("CURRENT_DRIVER_NAME: {}", CURRENT_DRIVER_NAME);
         logger.info("List of active browsers: " + activeDriversThread.get());
         initializeNewWebDriverWait();
     }

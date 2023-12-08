@@ -55,7 +55,7 @@ public class BasePage {
     }
 
     public void uploadFileToRemoteServer(By by, String absolutePath){
-        ((RemoteWebDriver) activeDriversThread.get().get(CURRENT_DRIVER_NAME)).setFileDetector(new LocalFileDetector());
+        ((RemoteWebDriver) getDriver()).setFileDetector(new LocalFileDetector());
         WebElement fileInput = waitForElementToBeVisible(by);
         fileInput.sendKeys(absolutePath);
     }
