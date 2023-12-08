@@ -28,7 +28,7 @@ public class LoginPage extends BasePage {
         logger.info("Entered texts '{}' for element '{}'", textsToEnter, element);
     }
 
-    public void clickOnElement(String elementType, String element){
+    public void clickOnElement(String elementType, String element) {
         String locator = switch (elementType) {
             case "button" -> buttonLocators.get(element);
             case "text field" -> textFieldLocators.get(element);

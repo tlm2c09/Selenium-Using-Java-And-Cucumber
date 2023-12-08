@@ -22,18 +22,19 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
-import static utils.WaitsUtil.*;
+import static utils.WaitsUtil.initializeNewWebDriverWait;
+import static utils.WaitsUtil.waitThread;
 
 public class DriverManager {
 
-    private static final Logger logger = LogManager.getLogger(DriverManager.class.getSimpleName());
-    static String GRID_HUB_URL = "http://localhost:4444/wd/hub";
-    static String APPIUM_SERVER_URL = "http://127.0.0.1:4723/";
     public static final ThreadLocal<Map<String, WebDriver>> activeDriversThread = new ThreadLocal<>();
     public static final ThreadLocal<String> scenarioThread = new ThreadLocal<>();
+    private static final Logger logger = LogManager.getLogger(DriverManager.class.getSimpleName());
     public static String CURRENT_DRIVER_NAME;
+    static String GRID_HUB_URL = "http://localhost:4444/wd/hub";
+    static String APPIUM_SERVER_URL = "http://127.0.0.1:4723/";
 
-    public static WebDriver getDriver(){
+    public static WebDriver getDriver() {
         return activeDriversThread.get().get(CURRENT_DRIVER_NAME);
     }
 
@@ -61,7 +62,7 @@ public class DriverManager {
         return driver;
     }
 
-    private static MutableCapabilities setOptions(MutableCapabilities options){
+    private static MutableCapabilities setOptions(MutableCapabilities options) {
         //common capabilities for all browsers: https://w3c.github.io/webdriver/#capabilities
         options.setCapability("se:screenResolution", "1920x1080");
         options.setCapability("se:name", scenarioThread.get());
@@ -102,7 +103,7 @@ public class DriverManager {
         return options;
     }
 
-    public static AndroidDriver initializeAndroidDriver(){
+    public static AndroidDriver initializeAndroidDriver() {
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("platformName", "Android");
         caps.setCapability("platformVersion", "13.0");
@@ -122,7 +123,7 @@ public class DriverManager {
         return driver;
     }
 
-    public static IOSDriver initializeIOSDriver(){
+    public static IOSDriver initializeIOSDriver() {
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("platformName", "iOS");
         caps.setCapability("platformVersion", "TBD");

@@ -21,7 +21,8 @@ public class TestDataLoader {
     static {
         readTestData();
     }
-    public static void readTestData(){
+
+    public static void readTestData() {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             testData = objectMapper.readValue(new File(TEST_DATA_FILE_PATH), Map.class);
@@ -32,7 +33,7 @@ public class TestDataLoader {
         }
     }
 
-    public static String getTestData(String key){
+    public static String getTestData(String key) {
         String value;
         if (key.startsWith("@TD:")) {
             key = key.replace("@TD:", "");
@@ -48,13 +49,13 @@ public class TestDataLoader {
         return value;
     }
 
-    public static void saveTestData(String key, String value){
+    public static void saveTestData(String key, String value) {
         testData.put(key, value);
     }
 
-    public static void generateRandomValueForKey(String key){
+    public static void generateRandomValueForKey(String key) {
         String value;
-        switch (key){
+        switch (key) {
             case "RandomFirstName" -> value = faker.name().firstName();
             case "RandomLastName" -> value = faker.name().lastName();
             case "RandomPhoneNumber" -> value = faker.phoneNumber().phoneNumber();

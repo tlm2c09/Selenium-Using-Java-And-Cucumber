@@ -49,18 +49,18 @@ public class BasePage {
         }
     }
 
-    public void uploadFile(By by, String absolutePath){
+    public void uploadFile(By by, String absolutePath) {
         WebElement fileInput = waitForElementToBeVisible(by);
         fileInput.sendKeys(absolutePath);
     }
 
-    public void uploadFileToRemoteServer(By by, String absolutePath){
+    public void uploadFileToRemoteServer(By by, String absolutePath) {
         ((RemoteWebDriver) getDriver()).setFileDetector(new LocalFileDetector());
         WebElement fileInput = waitForElementToBeVisible(by);
         fileInput.sendKeys(absolutePath);
     }
 
-    public void selectOptionFromDropdownByValue(By dropdown, String selectType,String option) {
+    public void selectOptionFromDropdownByValue(By dropdown, String selectType, String option) {
         Select select = new Select(waitForElementToBeVisible(dropdown));
         switch (selectType) {
             case "text" -> select.selectByVisibleText(option);

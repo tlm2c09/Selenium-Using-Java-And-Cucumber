@@ -10,10 +10,10 @@ import java.io.File;
 
 public class AppiumServer {
 
-    static AppiumDriverLocalService service;
     private static final Logger logger = LogManager.getLogger(AppiumServer.class.getSimpleName());
     private static final String NODE_PATH = "YOUR_NODE_PATH";
     private static final String APPIUM_PATH = "YOUR_APPIUM_PATH";
+    static AppiumDriverLocalService service;
 
     public static void startAppiumServer() {
         service = AppiumDriverLocalService.buildDefaultService();

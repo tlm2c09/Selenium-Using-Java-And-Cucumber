@@ -12,36 +12,36 @@ public class Hook {
     static final String BROWSER_NAME = System.getProperty("browser");
 
     @BeforeAll
-    public static void beforeAll(){
-        if (BROWSER_NAME.equalsIgnoreCase("android") || BROWSER_NAME.equalsIgnoreCase("ios")){
+    public static void beforeAll() {
+        if (BROWSER_NAME.equalsIgnoreCase("android") || BROWSER_NAME.equalsIgnoreCase("ios")) {
             startAppiumServer();
         }
     }
 
+    public static byte[] takeScreenshot() {
+        return ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BYTES);
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        if (BROWSER_NAME.equalsIgnoreCase("android") || BROWSER_NAME.equalsIgnoreCase("ios")) {
+            stopAppiumServer();
+        }
+    }
+
     @Before
-    public void beforeScenario(Scenario scenario){
+    public void beforeScenario(Scenario scenario) {
         scenarioThread.set(scenario.getName());
         initializeBrowser(BROWSER_NAME);
         initializeNewWebDriverWait();
     }
 
     @After
-    public void afterScenario(Scenario scenario){
+    public void afterScenario(Scenario scenario) {
         if (scenario.isFailed()) {
             scenario.attach(takeScreenshot(), "image/png", scenario.getName());
         }
         closeAllBrowsers();
-    }
-
-    public static byte[] takeScreenshot() {
-        return  ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BYTES);
-    }
-
-    @AfterAll
-    public static void afterAll(){
-        if (BROWSER_NAME.equalsIgnoreCase("android") || BROWSER_NAME.equalsIgnoreCase("ios")){
-            stopAppiumServer();
-        }
     }
 
 }

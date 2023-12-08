@@ -17,12 +17,12 @@ public class BasePageSteps {
     }
 
     @And("the user starts a new browser {string}")
-    public void the_user_starts_a_new_browser_string(String browserName){
+    public void the_user_starts_a_new_browser_string(String browserName) {
         DriverManager.startNewBrowser(browserName);
     }
 
     @And("the user switches to the browser {string}")
-    public void the_user_switches_to_the_browser_string(String browserName){
+    public void the_user_switches_to_the_browser_string(String browserName) {
         DriverManager.switchToBrowser(browserName);
     }
 
@@ -42,7 +42,7 @@ public class BasePageSteps {
     }
 
     @When("the user goes to the url {string}")
-    public void the_user_goes_to_the_url_string(String url){
+    public void the_user_goes_to_the_url_string(String url) {
         DriverManager.getDriver().get(TestDataLoader.getTestData(url));
     }
 }
