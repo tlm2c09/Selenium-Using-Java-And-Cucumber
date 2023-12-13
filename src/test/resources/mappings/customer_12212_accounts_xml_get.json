@@ -1,0 +1,11 @@
+{
+    "request": {
+        "method": "GET",
+        "url": "/xml/customer/12212/accounts"
+    },
+    "response": {
+        "status": 200,
+		"headers": { "Content-Type": "application/xml" },
+        "bodyFileName": "customer_12212_accounts.xml"
+    }
+}
