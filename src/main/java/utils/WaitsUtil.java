@@ -73,8 +73,8 @@ public class WaitsUtil {
     public static void waitFor(String unit, int number) {
         try {
             switch (unit) {
-                case "seconds" -> Thread.sleep(Duration.ofSeconds(number));
-                case "minutes" -> Thread.sleep(Duration.ofMinutes(number));
+                case "seconds" -> Thread.sleep(Duration.ofSeconds(number).toSeconds());
+                case "minutes" -> Thread.sleep(Duration.ofMinutes(number).toMinutes());
                 default -> throw new CucumberException("Invalid unit " + unit);
             }
         } catch (InterruptedException e) {
