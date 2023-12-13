@@ -71,7 +71,7 @@ Reference: [Parallel Execution with TestNG](https://cucumber.io/docs/guides/para
       - Android: appium driver install uiautomator2
       - iOS: 
 3. Setup Android SDK and virtual device
-4. Add ANDROID_HOME to Environment to [Environment Variables](https://developer.android.com/tools/variables).
+4. Add ANDROID_HOME to [Environment Variables](https://developer.android.com/tools/variables).
 5. Add [Appium Java client](https://mvnrepository.com/artifact/io.appium/java-client/9.0.0) to POM file: this provides the `AppiumDriver` class
 6. Get started with Appium Inspector with the basic capabilities
    - platformName: Android or iOS
@@ -82,3 +82,16 @@ Reference: [Parallel Execution with TestNG](https://cucumber.io/docs/guides/para
 7. To start / stop the Appium server, use the class `AppiumServer.java`.
    - `AppiumServiceBuilder` to build the configurations for the Appium server like port, NodeJS location, Appium location etc
    - `AppiumDriverLocalService` to start / stop the server
+
+## Rest Assured for API testing ##
+1. For mocking API requests, Wire Mock library is used to mock the API requests
+    - The test classes need to have the annotation `@WireMockTest` with `httpPort` is set to a desired port
+    - The `@BeforeEach` annotation is used with a setup method for setting the base URL of the Wire Mock server (`http://localhost`) and the desired port
+    - The Wire Mock library will automatically detect the mapping requests from the folder:
+      - `test/java/resources/mappings`: is used for looking up matching requests (method, url, bodyPattern...) to make requests and returns desired responses
+2. Using the JSONPath and XMLPath for testing the returned response: [Rest Assured](https://github.com/rest-assured/rest-assured)
+3. Added some POJO classes for serializing and deserializing the request and response body
+    - using @Getter / @Setter annotation so that no need to create getters and setters methods
+    - can use @Builder for building an instance
+
+Reference: 
